@@ -150,7 +150,8 @@ class StringProcessor{
             {"I'm good", "Good, thank you", "Not bad", "Not too bad"},
             {"Not much", "Waiting for a question, actually", "Bored, actually", "You are boring", "Not a lot"},
             // Specific Answers
-            {"A great way of texting your friends in class", "", "", "", ""},
+            {"A great way of texting your friends in class", "Great way to cheat on a test",
+                    "Good means of playing games in glass", "They are awesome, whats what they are", "Cool technology"},
             {"There are 10 smart watches of note"},
             // Goodbye
             {"Goodbye", "Syl", "Totsiens", "Auf Wiedersehen", "See ya"}
