@@ -1,4 +1,4 @@
-package com.ba;
+package com.chatbot;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -12,7 +12,7 @@ import java.awt.event.KeyEvent;
 
 import java.lang.Math;
 
-public class ChatBot1 extends JFrame implements KeyListener{
+public class ChatBotExample extends JFrame implements KeyListener{
 
     JPanel p=new JPanel();
     JTextArea dialog=new JTextArea(20,50);
@@ -39,10 +39,10 @@ public class ChatBot1 extends JFrame implements KeyListener{
     };
 
     public static void main(String[] args){
-        new ChatBot1();
+        new ChatBotExample();
     }
 
-    public ChatBot1(){
+    public ChatBotExample(){
         super("Chat Bot");
         setSize(600,400);
         setResizable(false);

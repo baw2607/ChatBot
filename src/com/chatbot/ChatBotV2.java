@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-// ---- ChatBotV2: main class of ChatBotSID to handle GUI ---- //
+// ---- ChatBotV2: main class of ChatBot to handle GUI ---- //
 public class ChatBotV2 extends JFrame {
 
     // Create variables needed for GUI:
