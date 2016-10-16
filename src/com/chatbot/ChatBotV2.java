@@ -1,13 +1,13 @@
-package com.ba;
+package com.chatbot;
 /*
-*   Authors: Ben White (StringProcessor)
-*            Amit Jassi (ChatBotV2)
+*   Authors: Ben White
+*            Amit Jassi
 */
 import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-// ---- ChatBotV2: class of ChatBot to handle GUI ---- //
+// ---- ChatBotV2: main class of ChatBot to handle GUI ---- //
 public class ChatBotV2 extends JFrame {
 
     // Create variables needed for GUI:
