@@ -31,9 +31,21 @@ public class ChatBot extends JFrame {
 
     // -- Constructor: Set up GUI, assign default params, housekeeping -- //
     public ChatBot() {
-        // Set Title of Frame, run the bot using startBot()
+        // Set Title of Frame, run the bot using initialize()
         super("Much Chat, Such Bot");
-        startBot();
+        initialize();
+    } // End Constructor
+
+    // -- initialize: initial output and grab users name -- //
+    void initialize() {
+        // Using JOP: to start conversation with the user
+        JOptionPane.showMessageDialog(null, "Hello!");
+        String name = JOptionPane.showInputDialog(null, "What's your name?");
+        if(name.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Welcome, lets begin!");
+        } else {
+            JOptionPane.showMessageDialog(null, "Welcome " + name + ", lets begin!");
+        }
 
         // Set params for TextArea and TextField:
         // Editable and listener
@@ -55,22 +67,10 @@ public class ChatBot extends JFrame {
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-    } // End Constructor
-
-    // -- startBot: initial output and grab users name -- //
-    void startBot() {
-        // Using JOP: to start conversation with the user
-        JOptionPane.showMessageDialog(null, "Hello!");
-        String name = JOptionPane.showInputDialog(null, "What's your name?");
-        if(name.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Welcome, lets begin!");
-        } else {
-            JOptionPane.showMessageDialog(null, "Welcome " + name + ", lets begin!");
-        }
 
         // Initial output by Bot to user
         addTextToArea(bot + "Welcome " + name + ", I can tell you all about Smart watches. Ask me a question!");
-    } // End Method: startBot
+    } // End Method: initialize
 
    // -- addListener: add keyListener to TextField: call processing methods -- //
    void addListener(JTextField field) {
@@ -91,7 +91,7 @@ public class ChatBot extends JFrame {
                    // housekeeping: set TextField to uneditable while
                    // in use and replace text with null
                    inputField.setEditable(false);
-                   inputField.setText("");
+                   inputField.setText(null);
 
                    // add text grabbed to running conversation with bot
                    addTextToArea(human + text);
@@ -114,7 +114,7 @@ public class ChatBot extends JFrame {
            // -- keyReleased: grab released key and process -- //
            @Override
            public void keyReleased(KeyEvent e) {
-               // Once ENTER key released: allow editing of field
+               // IF ENTER key released: allow editing of field
                if(e.getKeyCode() == KeyEvent.VK_ENTER) inputField.setEditable(true);
            } // End Method: keyReleased
        }); // End Anonymous Inner Class
@@ -133,7 +133,7 @@ class StringProcessor{
     // Array of questions bot can reponse to
      String[][] expectedInputs = {
             // Greetings
-            {"hello", "hi", "hey", "hallo", "good morning", "goeie more", "hiya"},
+            {"hello", "hi", "hey", "hallo", "good morning", "goeie more", "hiya", "harro"},
             // Generic Questions
             {"how r you", "how are you", "how r u", "how are ya", "how have you been"},
             {"whats up", "wassup", "sup", "what are you doing", "thats good"},
@@ -148,12 +148,12 @@ class StringProcessor{
     // Array of responses to questions by Human
     private String[][] botResponse = {
             // Greetings
-            {"Hello", "Hey there", "Hi", "Sup", "Hiya"},
+            {"Hello", "Hey there", "Hi", "Sup", "Hiya", "Harro"},
             // Generic Answers
             {"I'm good", "Good, thank you", "Not bad", "Not too bad"},
             {"Not much", "Waiting for a question, actually", "Bored, actually", "You are boring", "Not a lot"},
             // Specific Answers
-            {"A great way of texting your friends in class", "Great way to cheat on a test",
+            {"A great way of texting your friends in class", "A great way to cheat on a test",
                     "Good means of playing games in glass", "They are awesome, whats what they are", "Cool technology"},
             {"There are 10 smart watches of note"},
             // Goodbye
@@ -161,7 +161,6 @@ class StringProcessor{
             // Thanks
             {"No problem", "No worries", "No issue", "You too"}
     };
-
     // Position of array (which section of responses to decide from)
     int[] index = {0,0};
 
@@ -185,7 +184,7 @@ class StringProcessor{
                     index[0] = i;
                     index[1] = j;
                     return true;
-                    } // End IF
+                    } // End If
                 } // End For: j
             } // End For: i
         // Return false if doesn't match
