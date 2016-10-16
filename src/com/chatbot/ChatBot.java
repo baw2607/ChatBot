@@ -8,7 +8,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 // ---- ChatBotV2: main class of ChatBot to handle GUI ---- //
-public class ChatBotV2 extends JFrame {
+public class ChatBot extends JFrame {
 
     // Create variables needed for GUI:
     // TextArea, TextField, Label, Scroll
@@ -30,7 +30,7 @@ public class ChatBotV2 extends JFrame {
     private StringProcessor sp = new StringProcessor();
 
     // -- Constructor: Set up GUI, assign default params, housekeeping -- //
-    public ChatBotV2() {
+    public ChatBot() {
         // Set Title of Frame, run the bot using startBot()
         super("Much Chat, Such Bot");
         startBot();
@@ -124,7 +124,7 @@ public class ChatBotV2 extends JFrame {
     public void addTextToArea(String s) { dialogText.setText(dialogText.getText() + s + "\n");}
 
     // -- main: new anonymous instance of ChatBotV2
-    public static void main(String[] args) { new ChatBotV2(); }
+    public static void main(String[] args) { new ChatBot(); }
 
 } // End Class: ChatBotV2
 
