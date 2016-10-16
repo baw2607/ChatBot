@@ -74,7 +74,7 @@ public class ChatBotV2 extends JFrame {
 
    // -- addListener: add keyListener to TextField: call processing methods -- //
    void addListener(JTextField field) {
-       // Add listener: Anonymous Inner Class
+       // Add new Keylistener: Anonymous Inner Class
        field.addKeyListener(new KeyListener() {
            @Override
            public void keyTyped(KeyEvent e) {}
@@ -87,7 +87,7 @@ public class ChatBotV2 extends JFrame {
                    // Grabbing next in TextField and
                    // creating response String variable for use later
                    String text = inputField.getText();
-                   String response = "";
+                   String response;
                    // housekeeping: set TextField to uneditable while
                    // in use and replace text with null
                    inputField.setEditable(false);
@@ -99,8 +99,8 @@ public class ChatBotV2 extends JFrame {
                    // Call processing methods: with processed input as params and
                    // generate response: store in string variables
                    String edited = sp.processInput(text);
-                   if(sp.findMatch(edited)) {
-                       response = sp.generateResponse(edited);
+                   if(sp.findMatch(edited, sp.expectedInputs)) {
+                       response = sp.generateResponse();
                    } else {
                        response = "I don't understand this :-(";
                    }
@@ -131,7 +131,7 @@ public class ChatBotV2 extends JFrame {
 // ---- StringProcessor: class to Process text input and generate a response ---- //
 class StringProcessor{
     // Array of questions bot can reponse to
-    private String[][] expectedInputs = {
+     String[][] expectedInputs = {
             // Greetings
             {"hello", "hi", "hey", "hallo", "good morning", "goeie more", "hiya"},
             // Generic Questions
@@ -141,7 +141,9 @@ class StringProcessor{
             {"what is a smart watch",  "what is a smartwatch", "what is android wear", " what is androidwear"},
             {"how many smart watch are there", ""},
             // Goodbye
-            {"bye", "good night", "goodnight", "syl", "syt", "fairwell", "have a good one", "see you later"}
+            {"bye", "good night", "goodnight", "syl", "syt", "fairwell", "have a good one", "see you later"},
+            // Thanks
+            {"thank you", "thanks", "cheers", "awesome", " u da real mvp"}
     };
     private String[][] botResponse = {
             // Greetings
@@ -154,10 +156,13 @@ class StringProcessor{
                     "Good means of playing games in glass", "They are awesome, whats what they are", "Cool technology"},
             {"There are 10 smart watches of note"},
             // Goodbye
-            {"Goodbye", "Syl", "Totsiens", "Auf Wiedersehen", "See ya"}
+            {"Goodbye", "Syl", "Totsiens", "Auf Wiedersehen", "See ya"},
+            // Thanks
+            {"No problem", "No worries", "No issue", "You too"}
     };
-    // Position of array (which section of responses to output)
-    private int index = 0;
+
+    // Position of array (which section of responses to decide from)
+    int[] index = {0,0};
 
     // -- processInput: of text entered by user -- //
     String processInput(String str) {
@@ -170,13 +175,14 @@ class StringProcessor{
 
 
     // -- findMatch: of processed input in list of questions -- //
-    boolean findMatch(String s) {
-
-        for(int i = 0; i < expectedInputs.length; i++) {
-            for(int j = 0; j < expectedInputs[i].length; j++) {
-                if(expectedInputs[i][j].equals(s)) {
+    boolean findMatch(String s, String[][] arr) {
+        // Looping through all array items to find a match
+        for(int i = 0; i < arr.length; i++) {
+            for(int j = 0; j < arr[i].length; j++) {
+                if(arr[i][j].equals(s)) {
                     // Return string, and capture index
-                    index = i;
+                    index[0] = i;
+                    index[1] = j;
                     return true;
                     } // End IF
                 } // End For: j
@@ -186,9 +192,9 @@ class StringProcessor{
     } // End Method: findMatch
 
     // -- generateResponse: of bot to question/statement after finding match -- //
-    String generateResponse(String s) {
-        int rand = (int) (Math.random()*(5-1) +1);
-        return botResponse[index][rand];
+    String generateResponse() {
+        int rand = (int) (Math.random()*(index[0]-1) +1);
+        return botResponse[index[0]][rand];
     } // End Method: generateResponse
 
 } // End Class: StringProcessor
