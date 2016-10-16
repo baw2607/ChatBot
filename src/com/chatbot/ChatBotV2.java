@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-// ---- ChatBotV2: main class of ChatBot to handle GUI ---- //
+// ---- ChatBotV2: main class of ChatBotSID to handle GUI ---- //
 public class ChatBotV2 extends JFrame {
 
     // Create variables needed for GUI:
@@ -20,7 +20,7 @@ public class ChatBotV2 extends JFrame {
             JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
             JScrollPane.HORIZONTAL_SCROLLBAR_NEVER
             );
-    final JLabel inputLabel = new JLabel("Question the bot here:");
+    private JLabel inputLabel = new JLabel("Question the bot here:");
 
     // String constants for headers of Bot and Human
     private final String bot = "TechBot :\t";
@@ -69,7 +69,7 @@ public class ChatBotV2 extends JFrame {
         }
 
         // Initial output by Bot to user
-        addText(bot + "Welcome " + name + ", I can tell you all about Smart watches. Ask me a question!");
+        addTextToArea(bot + "Welcome " + name + ", I can tell you all about Smart watches. Ask me a question!");
     } // End Method: startBot
 
    // -- addListener: add keyListener to TextField: call processing methods -- //
@@ -79,7 +79,7 @@ public class ChatBotV2 extends JFrame {
            @Override
            public void keyTyped(KeyEvent e) {}
 
-           // -- keyPressed: grab pressed key and process -- //
+           // -- keyPressed: grab pressed key and process input + output -- //
            @Override
            public void keyPressed(KeyEvent e) {
                // Grabbing the ENTER key
@@ -94,7 +94,7 @@ public class ChatBotV2 extends JFrame {
                    inputField.setText("");
 
                    // add text grabbed to running conversation with bot
-                   addText(human + text);
+                   addTextToArea(human + text);
 
                    // Call processing methods: with processed input as params and
                    // generate response: store in string variables
@@ -106,7 +106,7 @@ public class ChatBotV2 extends JFrame {
                    }
 
                    // Add generated response to conversation with bot
-                   addText(bot + response);
+                   addTextToArea(bot + response);
 
                } // End If
            } // End Method: keyPressed
@@ -120,8 +120,8 @@ public class ChatBotV2 extends JFrame {
        }); // End Anonymous Inner Class
    } // End Method: addListener
 
-    // -- addText: add text to conversation with bot -- //
-    public void addText(String s) { dialogText.setText(dialogText.getText() + s + "\n");}
+    // -- addTextToArea: add text to conversation with bot -- //
+    public void addTextToArea(String s) { dialogText.setText(dialogText.getText() + s + "\n");}
 
     // -- main: new anonymous instance of ChatBotV2
     public static void main(String[] args) { new ChatBotV2(); }
@@ -145,6 +145,7 @@ class StringProcessor{
             // Thanks
             {"thank you", "thanks", "cheers", "awesome", " u da real mvp"}
     };
+    // Array of responses to questions by Human
     private String[][] botResponse = {
             // Greetings
             {"Hello", "Hey there", "Hi", "Sup", "Hiya"},
