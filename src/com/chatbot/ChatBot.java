@@ -1,5 +1,5 @@
 package com.chatbot;
-/*
+/*  Name: ChatBot
 *   Authors: Ben White
 *            Amit Jassi
 */
@@ -24,9 +24,8 @@ public class ChatBot extends JFrame {
     private JLabel inputLabel = new JLabel("Question the bot here:");
 
     // String constants for headers of Bot and Human(name)
-    private String name;
     private final String bot = "TechBot :\t";
-    private final String human = name + " :\t";
+    private final String human = "Human :\t";
 
     // New String Processor for processing input
     private StringProcessor sp = new StringProcessor();
@@ -42,7 +41,7 @@ public class ChatBot extends JFrame {
     void initialize() {
         // Using JOP: to start conversation with the user
         JOptionPane.showMessageDialog(null, "Hello!");
-        name = JOptionPane.showInputDialog(null, "What's your name?");
+        String name = JOptionPane.showInputDialog(null, "What's your name?");
         if(name.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Welcome, lets begin!");
         } else {
@@ -72,6 +71,7 @@ public class ChatBot extends JFrame {
         // Initial output by Bot to user
         addTextToArea(bot + "Welcome " + name + ", I can tell you all about Smart watches. Ask me a question!");
     } // End Method: initialize
+
    // -- addListener: add keyListener to TextField: call processing methods -- //
    void addListener(Component c) {
        // Add new Keylistener: Anonymous Inner Class
@@ -136,7 +136,7 @@ class StringProcessor{
             {"hello", "hi", "hey", "hallo", "good morning", "goeie more", "hiya", "harro", "ello guvner"},
             // Generic Questions
             {"how r you", "how are you", "how r u", "how are ya", "how have you been"},
-            {"whats up", "wassup", "sup", "what are you doing", "thats good"},
+            {"whats up", "wassup", "sup", "what are you doing"},
             // Specific Questions
             {"what is a smart watch",  "what is a smartwatch", "what is android wear", " what is androidwear"},
             {"how many smart watches are there", "how many are there"},
@@ -166,7 +166,7 @@ class StringProcessor{
             {"No problem", "No worries", "No issue", "You too"}
     };
     // Position of array (which section of responses to decide from)
-    int index = 0;
+    int[] index = {0,0};
 
     // -- processInput: of text entered by user -- //
     String processInput(String str) {
@@ -184,7 +184,8 @@ class StringProcessor{
             for(int j = 0; j < arr[i].length; j++) {
                 if(arr[i][j].equals(s)) {
                     // Return true, and capture index of correct response
-                    index = i;
+                    index[0] = i;
+                    index[1] = j;
                     return true;
                     } // End If
                 } // End For: j
@@ -193,10 +194,20 @@ class StringProcessor{
         return false;
     } // End Method: findMatch
 
+    // -- generateRandom: make a new random number --//
+    int generateRandom() {
+        return (int) (Math.random() * (index[0]));
+    }// End Method: generateRandom
+
     // -- generateResponse: of bot to question/statement after finding match -- //
     String generateResponse() {
-        int random = (int) (Math.random()*(index) + 1);
-        return botResponse[index - 1][random];
+        int random = generateRandom();
+        if(random > botResponse[index[0]].length) {
+            random = expectedInputs[index[0]].length - 1;
+        }
+        System.out.println("Random " + random);
+        System.out.println("index " + index[0]);
+        return botResponse[index[0]][random];
     } // End Method: generateResponse
 
 } // End Class: StringProcessor
