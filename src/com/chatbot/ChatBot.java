@@ -173,8 +173,7 @@ class StringProcessor{
     // -- processInput: of text entered by user -- //
     String processInput(String str) {
         // Set input to lowercase and remove all special character (!?. ,)
-        str = str.toLowerCase().trim();
-        str = str.replaceAll("[!?.,'%&*]", "");
+        str = str.toLowerCase().trim().replaceAll("[!?.,'%&*]", "");
         // Return processed string
         return str;
     } // End Method: processInput
