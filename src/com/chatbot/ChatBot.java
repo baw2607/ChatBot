@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Random;
 
 // ---- ChatBotV2: main class of ChatBot to handle GUI ---- //
 public class ChatBot extends JFrame {
@@ -19,7 +20,7 @@ public class ChatBot extends JFrame {
     private JScrollPane scroll = new JScrollPane(
             dialogText,
             JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-            JScrollPane.HORIZONTAL_SCROLLBAR_NEVER
+            JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED
             );
     private JLabel inputLabel = new JLabel("Question the bot here:");
 
@@ -96,10 +97,11 @@ public class ChatBot extends JFrame {
                    // add text grabbed to running conversation with bot
                    addTextToArea(human + text);
 
+                   // If match is found and String is not empty:
                    // Call processing methods: with processed input as params and
-                   // generate response: store in string variables
+                   // generate response: store in string variables response
                    String edited = sp.processInput(text);
-                   if(sp.findMatch(edited, sp.expectedInputs)) {
+                   if(sp.findMatch(edited, sp.expectedInputs) && !edited.isEmpty()) {
                        response = sp.generateResponse();
                    } else {
                        response = "I don't understand this :-(";
@@ -141,11 +143,11 @@ class StringProcessor{
             {"what is a smart watch",  "what is a smartwatch", "what is android wear", " what is androidwear"},
             {"how many smart watches are there", "how many are there"},
             {"what are they", "list them", "what are the best ones", ""},
-            {"what are the specs", "what are their internals", "why are they so good"},
+            {"what are the specs", "what are their specs", "why are they so good"},
             // Goodbye
-            {"bye", "good night", "goodnight", "syl", "syt", "fairwell", "fair well", "have a good one", "see you later"},
+            {"bye", "good night", "goodnight", "syl", "syt", "fairwell", "fair well", "have a good one", "see you later", "goodbye"},
             // Thanks
-            {"thank you", "thanks", "cheers", "awesome", " u da real mvp"}
+            {"thank you", "thanks", "cheers", "awesome", "u da real mvp"}
     };
     // Array of responses to questions by Human
     private String[][] botResponse = {
@@ -166,7 +168,7 @@ class StringProcessor{
             {"No problem", "No worries", "No issue", "You too"}
     };
     // Position of array (which section of responses to decide from)
-    int[] index = {0,0};
+    int index = 0;
 
     // -- processInput: of text entered by user -- //
     String processInput(String str) {
@@ -183,9 +185,8 @@ class StringProcessor{
         for(int i = 0; i < arr.length; i++) {
             for(int j = 0; j < arr[i].length; j++) {
                 if(arr[i][j].equals(s)) {
-                    // Return true, and capture index of correct response
-                    index[0] = i;
-                    index[1] = j;
+                    // Return true, and capture index of correct response array
+                    index = i;
                     return true;
                     } // End If
                 } // End For: j
@@ -194,20 +195,16 @@ class StringProcessor{
         return false;
     } // End Method: findMatch
 
-    // -- generateRandom: make a new random number --//
+    // -- generateRandom: make a new random number from 0 - length of responses array --//
     int generateRandom() {
-        return (int) (Math.random() * (index[0]));
+        Random r = new Random();
+        return r.nextInt(botResponse[index].length);
     }// End Method: generateRandom
 
     // -- generateResponse: of bot to question/statement after finding match -- //
     String generateResponse() {
         int random = generateRandom();
-        if(random > botResponse[index[0]].length) {
-            random = expectedInputs[index[0]].length - 1;
-        }
-        System.out.println("Random " + random);
-        System.out.println("index " + index[0]);
-        return botResponse[index[0]][random];
+        return botResponse[index][random];
     } // End Method: generateResponse
 
 } // End Class: StringProcessor
