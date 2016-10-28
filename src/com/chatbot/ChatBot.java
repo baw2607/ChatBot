@@ -31,10 +31,10 @@ public class ChatBot extends JFrame {
     // New String Processor for processing input
     private StringProcessor sp = new StringProcessor();
 
-    // -- Constructor: Set up GUI, assign default params, housekeeping -- //
+    // -- Constructor: Add title to Frame and run initialize -- //
     public ChatBot() {
         // Set Title of Frame, run the bot using initialize()
-        super("Much Chat, Such Bot, Very Smart, Awesome Smartwatch");
+        super("Much Chat, Such Bot, Very Smart, Awesome Smart watch");
         initialize();
     } // End Constructor
 
@@ -167,6 +167,7 @@ class StringProcessor{
             // Thanks
             {"No problem", "No worries", "No issue", "You too"}
     };
+
     // Position of array (which section of responses to decide from)
     int index = 0;
 
